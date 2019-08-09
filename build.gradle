@@ -1,0 +1,20 @@
+group 'com.kadir.twitterbots'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+  compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+  compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.7'
+  compile group: 'org.jsoup', name: 'jsoup', version: '1.9.1'
+  compile project(":bot-authenticator")
+  compile project(":rate-limit-handler")
+
+  testCompile group: 'junit', name: 'junit', version: '4.12'
+}

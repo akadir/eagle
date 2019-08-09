@@ -1,0 +1,6 @@
+rootProject.name = 'eagle'
+include(":bot-authenticator")
+include(":rate-limit-handler")
+project(':bot-authenticator').projectDir = new File('../commons/bot-authenticator')
+project(':rate-limit-handler').projectDir = new File('../commons/rate-limit-handler')
+
