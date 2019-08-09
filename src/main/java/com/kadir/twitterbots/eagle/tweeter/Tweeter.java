@@ -65,7 +65,6 @@ public class Tweeter {
                 updatedStatus = twitter.updateStatus(textToTweet);
                 logger.info("Status updated to: {}", updatedStatus.getText());
                 RateLimitHandler.handle(twitter.hashCode(), updatedStatus.getRateLimitStatus(), ApiProcessType.UPDATE_STATUS);
-                logger.info("Status updated: {}", textToTweet);
             } else {
                 logger.error("Could not update status");
             }
@@ -84,7 +83,7 @@ public class Tweeter {
 
             for (Status status : statuses) {
                 String lastTweet = status.getText();
-                String count = lastTweet.split(" ")[0];
+                String count = lastTweet.split(" ")[0].replaceAll(",", "").replaceAll("\\.", "");
                 try {
                     return Integer.parseInt(count);
                 } catch (NumberFormatException e) {
