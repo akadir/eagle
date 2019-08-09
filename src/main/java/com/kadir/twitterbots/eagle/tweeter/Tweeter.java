@@ -58,7 +58,7 @@ public class Tweeter {
 
             if (subscriberCount > 0) {
                 if (lastCount > 0) {
-                    textToTweet = numberFormat.format(subscriberCount) + " abone.\nSon kontrol sonrası değişim: " + numberFormat.format(difference) + "\nhttps://www.youtube.com/Besiktas\n#SubToBeşiktaş #Beşiktaş #BeşiktaşYoutube #Bjk";
+                    textToTweet = numberFormat.format(subscriberCount) + " abone.\nSon kontrol sonrası değişim: " + ((difference > 0) ? "+" : "") + numberFormat.format(difference) + "\nhttps://www.youtube.com/Besiktas\n#SubToBeşiktaş #Beşiktaş #BeşiktaşYoutube #Bjk";
                 } else {
                     textToTweet = numberFormat.format(subscriberCount) + " abone.\nhttps://www.youtube.com/Besiktas\n#SubToBeşiktaş #Beşiktaş #BeşiktaşYoutube #Bjk";
                 }
