@@ -1,14 +1,5 @@
 language: java
-
-matrix:
-  include:
-    - name: "linux"
-      os: linux
-      dist: bionic
-    - name: "mac os"
-      os: osx
-    - name: "windows"
-      os: windows
+jdk: oraclejdk8
 
 script:
-  - ./gradlew build
+  - gradle build
