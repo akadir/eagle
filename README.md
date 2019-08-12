@@ -1,6 +1,14 @@
 # Eagle
 Tweets subscriber count of youtube account.
 
+#### run
+
+clone project and set required properties in eagle.properties file, and then execute: 
+
+```groovy
+gradle run
+```
+
 #### eagle.properties
 
 ```properties

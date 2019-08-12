@@ -16,6 +16,14 @@ jar {
   }
 }
 
+task run(type: JavaExec) {
+  group = 'Run' // <-- change the name as per your need
+  description = 'Tweet youtube subscriber count'
+
+  classpath sourceSets.main.runtimeClasspath
+  main = "com.kadir.twitterbots.eagle.Eagle"
+}
+
 dependencies {
   implementation 'com.kadir.twitterbots.commons:bot-authenticator:1.0'
   implementation 'com.kadir.twitterbots.commons:rate-limit-handler:1.0'
