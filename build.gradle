@@ -18,7 +18,7 @@ jar {
 }
 
 task run(type: JavaExec) {
-  group = 'Run' // <-- change the name as per your need
+  group = 'Run'
   description = 'Tweet youtube subscriber count'
 
   classpath sourceSets.main.runtimeClasspath
