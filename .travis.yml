@@ -2,13 +2,13 @@ language: java
 
 matrix:
   include:
-    - name: "linux trusty"
+    - name: "linux"
       os: linux
-      dist: trusty
+      dist: bionic
     - name: "mac os"
       os: osx
     - name: "windows"
       os: windows
 
 script:
-  - gradle build
+  - ./gradlew build
