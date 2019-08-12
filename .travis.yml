@@ -1,4 +1,15 @@
 language: java
+jdk: oraclejdk8
+
+matrix:
+  include:
+    - name: "linux trusty"
+      os: linux
+      dist: trusty
+    - name: "mac os"
+      os: osx
+    - name: "windows"
+      os: windows
 
 script:
   - gradle build
