@@ -11,10 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Properties;
@@ -29,6 +27,8 @@ public class Tweeter {
 
     private IFetcher<Integer, String> youtubeSubscriberCountFetcher;
     private String youtubeAccount;
+    private String youtubeAccountLink;
+    private String tweetEndsWith;
     private Twitter twitter;
 
     public Tweeter() {
@@ -56,11 +56,14 @@ public class Tweeter {
             int difference = subscriberCount - lastCount;
             logger.info("last count: {} - current count: {} - difference: {}", lastCount, subscriberCount, difference);
 
+            youtubeAccountLink = "https://www.youtube.com/" + youtubeAccount;
+            logger.info("set youtubeAccountLink: {}", youtubeAccountLink);
+            String tweetEnd = "\n" + youtubeAccountLink + "\n" + tweetEndsWith;
             if (subscriberCount > 0) {
                 if (lastCount > 0) {
-                    textToTweet = numberFormat.format(subscriberCount) + " abone.\nSon kontrol sonrası değişim: " + ((difference > 0) ? "+" : "") + numberFormat.format(difference) + "\nhttps://www.youtube.com/Besiktas\n#SubToBeşiktaş #Beşiktaş #BeşiktaşYoutube #Bjk";
+                    textToTweet = numberFormat.format(subscriberCount) + " abone.\nSon kontrol sonrası değişim: " + ((difference > 0) ? "+" : "") + numberFormat.format(difference) + tweetEnd;
                 } else {
-                    textToTweet = numberFormat.format(subscriberCount) + " abone.\nhttps://www.youtube.com/Besiktas\n#SubToBeşiktaş #Beşiktaş #BeşiktaşYoutube #Bjk";
+                    textToTweet = numberFormat.format(subscriberCount) + " abone." + tweetEnd;
                 }
                 updatedStatus = twitter.updateStatus(textToTweet);
                 logger.info("Status updated to: {}", updatedStatus.getText());
@@ -105,9 +108,11 @@ public class Tweeter {
         File propertyFile = new File(EagleConstants.PROPERTIES_FILE_NAME);
 
         try (InputStream input = new FileInputStream(propertyFile)) {
-            properties.load(input);
+            properties.load(new InputStreamReader(input, Charset.forName("UTF-8")));
             youtubeAccount = properties.getProperty("youtube-account");
             logger.info("set youtube account: {}", youtubeAccount);
+            tweetEndsWith = properties.getProperty("tweet-ends-with");
+            logger.info("set tweetEndsWith: {}", tweetEndsWith);
             logger.info("All properties loaded from file: {}", EagleConstants.PROPERTIES_FILE_NAME);
         } catch (IOException e) {
             logger.error("error occurred while getting properties from file  {} ", EagleConstants.PROPERTIES_FILE_NAME, e);
