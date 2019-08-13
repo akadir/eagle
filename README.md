@@ -22,4 +22,5 @@ eagle-consumer-secret=
 eagle-access-token=
 eagle-access-token-secret=
 youtube-account=
+tweet-ends-with=
 ```
