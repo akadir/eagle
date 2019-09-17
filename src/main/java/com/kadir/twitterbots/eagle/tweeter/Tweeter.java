@@ -3,6 +3,7 @@ package com.kadir.twitterbots.eagle.tweeter;
 import com.kadir.twitterbots.authentication.BotAuthenticator;
 import com.kadir.twitterbots.eagle.fetcher.IFetcher;
 import com.kadir.twitterbots.eagle.fetcher.YoutubeSubscriberCountFetcher;
+import com.kadir.twitterbots.eagle.fetcher.YoutubeSubscriberCountFetcherViaApi;
 import com.kadir.twitterbots.eagle.util.EagleConstants;
 import com.kadir.twitterbots.exceptions.PropertyNotLoadedException;
 import com.kadir.twitterbots.ratelimithandler.handler.RateLimitHandler;
@@ -29,10 +30,12 @@ public class Tweeter {
     private String youtubeAccount;
     private String youtubeAccountLink;
     private String tweetEndsWith;
+    private String youtubeAccountId;
+    private String youtubeApiKey;
     private Twitter twitter;
 
     public Tweeter() {
-        this.youtubeSubscriberCountFetcher = new YoutubeSubscriberCountFetcher();
+        this.youtubeSubscriberCountFetcher = new YoutubeSubscriberCountFetcherViaApi();
     }
 
     public void run() {
@@ -52,7 +55,7 @@ public class Tweeter {
 
         try {
             int lastCount = findLastCount();
-            int subscriberCount = this.youtubeSubscriberCountFetcher.get(youtubeAccount);
+            int subscriberCount = this.youtubeSubscriberCountFetcher.get(youtubeAccountId, youtubeApiKey);
             int difference = subscriberCount - lastCount;
             logger.info("last count: {} - current count: {} - difference: {}", lastCount, subscriberCount, difference);
 
@@ -113,6 +116,11 @@ public class Tweeter {
             logger.info("set youtube account: {}", youtubeAccount);
             tweetEndsWith = properties.getProperty("tweet-ends-with");
             logger.info("set tweetEndsWith: {}", tweetEndsWith);
+            youtubeAccountId = properties.getProperty("youtube-account-id");
+            logger.info("set youtubeAccountId: {}", youtubeAccountId);
+            youtubeApiKey = properties.getProperty("youtube-api-key");
+            logger.info("set youtubeApiKey: {}", youtubeApiKey);
+
             logger.info("All properties loaded from file: {}", EagleConstants.PROPERTIES_FILE_NAME);
         } catch (IOException e) {
             logger.error("error occurred while getting properties from file  {} ", EagleConstants.PROPERTIES_FILE_NAME, e);
